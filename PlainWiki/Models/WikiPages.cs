@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Syncfusion.Windows.Controls.RichTextBoxAdv;
+using Microsoft.AspNetCore.Html;
 
 namespace PlainWiki.Models
 {
@@ -10,6 +10,8 @@ namespace PlainWiki.Models
     {
         public int ID { get; set; }
         public string Title { get; set; }
+
         public string RichText { get; set; }
+        //public List<Images> ImagesList { get; set; }
     }
 }

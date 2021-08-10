@@ -16,8 +16,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
-    <PackageReference Include="Syncfusion.SfRichTextBoxAdv.WPF" Version="19.2.0.51" />
-    <PackageReference Include="TinyMCE" Version="5.8.2" />
+    <PackageReference Include="summernote.editor" Version="0.8.10" />
   </ItemGroup>
 
 </Project>
