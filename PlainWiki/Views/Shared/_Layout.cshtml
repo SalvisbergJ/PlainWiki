@@ -25,7 +25,12 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="WikiPage" asp-action="Index">WikiPages</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Search">Search</a>
+                            <form asp-controller="WikiPage" asp-action="Index">
+                                <p>
+                                    <input type="text" name="SearchString" />
+                                    <input type="submit" value="Search" />
+                                </p>
+                            </form>
                         </li>
                     </ul>
                 </div>

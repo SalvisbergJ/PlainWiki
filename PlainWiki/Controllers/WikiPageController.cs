@@ -22,11 +22,7 @@ namespace PlainWiki.Controllers
             _context = context;
         }
 
-        // GET: WikiPage
-        public async Task<IActionResult> Index()
-        {
-            return View(await _context.WikiPages.ToListAsync());
-        }
+       
 
         // GET: WikiPage/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -192,6 +188,18 @@ namespace PlainWiki.Controllers
             }
 
             return View(wikiPages);
+        }
+        public async Task<IActionResult> Index(string searchString)
+        {
+            var wikiPages = from m in _context.WikiPages
+                select m;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                wikiPages = wikiPages.Where(s => s.Title.Contains(searchString));
+            }
+
+            return View(await wikiPages.ToListAsync());
         }
     }
 }
