@@ -18,10 +18,10 @@
             @Html.DisplayFor(model => model.Title)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.RichText)
+            Grösse
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.RichText)
+            @Html.Raw(Model.RichText.Length) Bytes
         </dd>
     </dl>
 </div>

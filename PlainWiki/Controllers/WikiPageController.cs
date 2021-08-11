@@ -149,29 +149,29 @@ namespace PlainWiki.Controllers
             return _context.WikiPages.Any(e => e.ID == id);
         }
 
-        [HttpPost]
-        public JsonResult UploadFile(IFormFile file)
-        {
-            using var ms = new MemoryStream();
-            if (file == null) return Json("");
-            file.CopyTo(ms);
-            var fileBytes = ms.ToArray();
-            var image = new Images
-            {
-                ImageData = fileBytes,
-            };
-            _context.ImagesList.Add(image);
-            _context.SaveChanges();
-            return Json($"<img src='/WikiPosts/GetFile/{image.Id}'></img>");
-        }
+        //[HttpPost]
+        //public JsonResult UploadFile(IFormFile file)
+        //{
+        //    using var ms = new MemoryStream();
+        //    if (file == null) return Json("");
+        //    file.CopyTo(ms);
+        //    var fileBytes = ms.ToArray();
+        //    var image = new Images
+        //    {
+        //        ImageData = fileBytes,
+        //    };
+        //    _context.ImagesList.Add(image);
+        //    _context.SaveChanges();
+        //    return Json($"<img src='/WikiPosts/GetFile/{image.Id}'></img>");
+        //}
 
-        public FileResult GetFile(int id)
-        {
-            var imageData = _context.ImagesList.FirstOrDefault(x => x.Id == id)?.ImageData;
-            if (imageData == null) return null;
-            var ms = new MemoryStream(imageData);
-            return File(ms, "image/jpeg");
-        }
+        //public FileResult GetFile(int id)
+        //{
+        //    var imageData = _context.ImagesList.FirstOrDefault(x => x.Id == id)?.ImageData;
+        //    if (imageData == null) return null;
+        //    var ms = new MemoryStream(imageData);
+        //    return File(ms, "image/jpeg");
+        //}
 
         public async Task<IActionResult> Open(int? id)
         {

@@ -24,15 +24,14 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="WikiPage" asp-action="Index">WikiPages</a>
                         </li>
-                        <li class="nav-item">
-                            <form asp-controller="WikiPage" asp-action="Index">
-                                <p>
-                                    <input type="text" name="SearchString" />
-                                    <input type="submit" value="Search" />
-                                </p>
-                            </form>
-                        </li>
                     </ul>
+                    <div class="right">
+                        <div class="align-middle">
+                            <form asp-controller="WikiPage" asp-action="Index">
+                                <input type="text" onfocus="this.value = ''" onblur="this.value = '&#128269'" name="SearchString" value="&#128269"/>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
         </nav>
