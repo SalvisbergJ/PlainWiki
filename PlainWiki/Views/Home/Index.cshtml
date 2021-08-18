@@ -1,9 +1,18 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Http
+@model PlainWiki.Models.UserProfile
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
     <h1 class="display-4">Herzlich Willkommen</h1>
     <p>Dies ist die Hauptseite des Wikis gehen Sie auf WikiPages um alle Seiten zu sehen oder selber eine Seite zu erstellen. <br /> Sie können auch direkt nach einer Seite suchen</p>
-    <a asp-action="Login">  Login </a>
+    @{
+        string? ifCondition = Model.UserName;
+        if (ifCondition != null)
+        {
+            Console.WriteLine("USERNAME" , Model.UserName);
+        }
+    }
+    <a asp-action="Login" class="hideLogin">  Login </a>
 </div>

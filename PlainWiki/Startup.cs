@@ -26,7 +26,8 @@ namespace PlainWiki
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-
+            services.AddDistributedMemoryCache(); // Adds a default in-memory implementation of IDistributedCache
+            services.AddSession();
             services.AddDbContext<ApplicationDataContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
         }
@@ -48,7 +49,7 @@ namespace PlainWiki
             app.UseStaticFiles();
             app.UseSession();
             app.UseRouting();
-
+            
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

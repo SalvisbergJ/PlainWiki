@@ -6,7 +6,10 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.CodeAnalysis;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using PlainWiki.Data;
 
 namespace PlainWiki.Controllers
@@ -23,6 +26,7 @@ namespace PlainWiki.Controllers
 
         public IActionResult Index()
         {
+            HttpContext.Session.SetString("Test", "Ben Rules!");
             return View();
         }
 
@@ -39,21 +43,22 @@ namespace PlainWiki.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(UserProfile objUser)
+
         {
             if (ModelState.IsValid)
             {
-                _context.Add(objUser);
-                    await _context.SaveChangesAsync();
-                    var db = await _context.UserProfile.FindAsync();
-                    if(db.UserName.Equals(objUser.UserName)&&db.Password.Equals(objUser.Password))
+                {
+                    var obj = _context.UserProfile.Where(a => a.UserName.Equals(objUser.UserName) && a.Password.Equals(objUser.Password)).FirstOrDefault();
+                    if (obj != null)
                     {
-                        var obj = objUser.UserName;
-                        if (obj != null)
-                        {
-                            HttpContext.Session("UserName") = obj.ToString();
-                            return RedirectToAction("Index");
-                        }
+                        HttpContext.Session.SetInt32("UserId", obj.UserId);
+                        HttpContext.Session.SetString("UserName", obj.UserName.ToString());
+                        Console.WriteLine(HttpContext.Session.GetInt32("UserId"));
+                        Console.WriteLine(HttpContext.Session.GetString("UserName"));
+                        return RedirectToAction("Index");
+                        
                     }
+                }
             }
             return View(objUser);
         }

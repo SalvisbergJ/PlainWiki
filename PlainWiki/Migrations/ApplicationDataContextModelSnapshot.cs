@@ -35,6 +35,23 @@ namespace PlainWiki.Migrations
 
                     b.ToTable("WikiPages");
                 });
+            modelBuilder.Entity("PlainWiki.Models.UserProfile", b =>
+            {
+                b.Property<int>("UserId")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("int")
+                    .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                b.Property<string>("UserName")
+                    .HasColumnType("nvarchar(max)");
+
+                b.Property<int>("Password")
+                    .HasColumnType("int");
+
+                b.HasKey("UserId");
+
+                b.ToTable("UserProfile");
+            });
 #pragma warning restore 612, 618
         }
     }
