@@ -25,10 +25,11 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="WikiPage" asp-action="Index">WikiPages</a>
                         </li>
                     </ul>
+                    <partial name="_LoginPartial" />
                     <div class="right">
                         <div class="align-middle">
                             <form asp-controller="WikiPage" asp-action="Index">
-                                <input type="text" onfocus="this.value = ''" onblur="this.value = '&#128269'" name="SearchString" value="&#128269"/>
+                                <input type="text" onfocus="this.value = ''" onblur="this.value = '&#128269'" name="SearchString" value="&#128269" />
                             </form>
                         </div>
                     </div>

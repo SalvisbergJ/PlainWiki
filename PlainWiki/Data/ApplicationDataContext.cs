@@ -15,8 +15,6 @@ namespace PlainWiki.Data
         }
 
         public DbSet<WikiPages> WikiPages { get; set; }
-        public DbSet<Images> ImagesList { get; set; }
-        public DbSet<UserProfile> UserProfile { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
