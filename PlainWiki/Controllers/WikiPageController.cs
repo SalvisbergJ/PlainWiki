@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Mime;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -13,6 +14,7 @@ using PlainWiki.Models;
 
 namespace PlainWiki.Controllers
 {
+    
     public class WikiPageController : Controller
     {
         private readonly ApplicationDataContext _context;
@@ -45,7 +47,7 @@ namespace PlainWiki.Controllers
         // GET: WikiPage/Create
         public IActionResult Create()
         {
-            return View();
+            return View("Create");
         }
 
         // POST: WikiPage/Create
@@ -116,6 +118,7 @@ namespace PlainWiki.Controllers
         }
 
         // GET: WikiPage/Delete/5
+        [Authorize(Roles = "Admin, User")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -144,7 +147,7 @@ namespace PlainWiki.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool WikiPagesExists(int id)
+        public bool WikiPagesExists(int id)
         {
             return _context.WikiPages.Any(e => e.ID == id);
         }

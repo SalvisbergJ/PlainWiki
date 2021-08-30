@@ -20,6 +20,7 @@
     <PackageReference Include="Microsoft.Identity.Web.UI" Version="1.15.2" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
     <PackageReference Include="summernote.editor" Version="0.8.10" />
+    <PackageReference Include="xunit" Version="2.4.1" />
   </ItemGroup>
 
 </Project>

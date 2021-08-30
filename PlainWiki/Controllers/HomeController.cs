@@ -16,7 +16,6 @@ using PlainWiki.Data;
 
 namespace PlainWiki.Controllers
 {
-    [Authorize (Roles = "Admin, User")]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
