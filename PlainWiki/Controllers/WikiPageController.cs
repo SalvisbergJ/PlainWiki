@@ -11,17 +11,19 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PlainWiki.Data;
 using PlainWiki.Models;
+using PlainWiki.Services.Interfaces;
 
 namespace PlainWiki.Controllers
 {
     
     public class WikiPageController : Controller
     {
-        private readonly ApplicationDataContext _context;
+        //private readonly ApplicationDataContext _wikiPageService;
+        private readonly IWikiPageService _wikiPageService;
 
-        public WikiPageController(ApplicationDataContext context)
+        public WikiPageController(IWikiPageService wikiPageService)
         {
-            _context = context;
+            _wikiPageService = wikiPageService;
         }
 
        
@@ -34,8 +36,7 @@ namespace PlainWiki.Controllers
                 return NotFound();
             }
 
-            var wikiPages = await _context.WikiPages
-                .FirstOrDefaultAsync(m => m.ID == id);
+            var wikiPages = await _wikiPageService.GetWikiPage(id);
             if (wikiPages == null)
             {
                 return NotFound();
@@ -59,8 +60,8 @@ namespace PlainWiki.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(wikiPages);
-                await _context.SaveChangesAsync();
+                _wikiPageService.Add(wikiPages);
+                await _wikiPageService.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(wikiPages);
@@ -74,7 +75,7 @@ namespace PlainWiki.Controllers
                 return NotFound();
             }
 
-            var wikiPages = await _context.WikiPages.FindAsync(id);
+            var wikiPages = await _wikiPageService.GetWikiPage(id);
             if (wikiPages == null)
             {
                 return NotFound();
@@ -98,8 +99,8 @@ namespace PlainWiki.Controllers
             {
                 try
                 {
-                    _context.Update(wikiPages);
-                    await _context.SaveChangesAsync();
+                    _wikiPageService.Update(wikiPages);
+                    await _wikiPageService.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -126,8 +127,7 @@ namespace PlainWiki.Controllers
                 return NotFound();
             }
 
-            var wikiPages = await _context.WikiPages
-                .FirstOrDefaultAsync(m => m.ID == id);
+            var wikiPages = await _wikiPageService.GetWikiPage(id);
             if (wikiPages == null)
             {
                 return NotFound();
@@ -141,15 +141,15 @@ namespace PlainWiki.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var wikiPages = await _context.WikiPages.FindAsync(id);
-            _context.WikiPages.Remove(wikiPages);
-            await _context.SaveChangesAsync();
+            var wikiPages = await _wikiPageService.GetWikiPage(id);
+            _wikiPageService.Remove(wikiPages);
+            await _wikiPageService.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         public bool WikiPagesExists(int id)
         {
-            return _context.WikiPages.Any(e => e.ID == id);
+            return _wikiPageService.GetWikiPage(id) != null;
         }
 
         //[HttpPost]
@@ -163,14 +163,14 @@ namespace PlainWiki.Controllers
         //    {
         //        ImageData = fileBytes,
         //    };
-        //    _context.ImagesList.Add(image);
-        //    _context.SaveChanges();
+        //    _wikiPageService.ImagesList.Add(image);
+        //    _wikiPageService.SaveChanges();
         //    return Json($"<img src='/WikiPosts/GetFile/{image.Id}'></img>");
         //}
 
         //public FileResult GetFile(int id)
         //{
-        //    var imageData = _context.ImagesList.FirstOrDefault(x => x.Id == id)?.ImageData;
+        //    var imageData = _wikiPageService.ImagesList.FirstOrDefault(x => x.Id == id)?.ImageData;
         //    if (imageData == null) return null;
         //    var ms = new MemoryStream(imageData);
         //    return File(ms, "image/jpeg");
@@ -183,8 +183,7 @@ namespace PlainWiki.Controllers
                 return NotFound();
             }
 
-            var wikiPages = await _context.WikiPages
-                .FirstOrDefaultAsync(m => m.ID == id);
+            var wikiPages = await _wikiPageService.GetWikiPage(id);
             if (wikiPages == null)
             {
                 return NotFound();
@@ -194,7 +193,7 @@ namespace PlainWiki.Controllers
         }
         public async Task<IActionResult> Index(string searchString)
         {
-            var wikiPages = from m in _context.WikiPages
+            var wikiPages = from m in _wikiPageService.GetWikiPages()
                 select m;
 
             if (!String.IsNullOrEmpty(searchString))
@@ -202,7 +201,7 @@ namespace PlainWiki.Controllers
                 wikiPages = wikiPages.Where(s => s.Title.Contains(searchString));
             }
 
-            return View(await wikiPages.ToListAsync());
+            return View(wikiPages);
         }
     }
 }

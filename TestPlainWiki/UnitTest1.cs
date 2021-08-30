@@ -14,7 +14,6 @@ namespace TestPlainWiki.Tests
     public class Tests
     {
         private readonly ITestOutputHelper _testOutputHelper;
-        private readonly ApplicationDataContext _context;
         private WikiPageController _wikiPageController;
         public Tests(ITestOutputHelper testOutputHelper)
         {
@@ -33,15 +32,6 @@ namespace TestPlainWiki.Tests
             };
             var wikiPagesTitle = wikiPages.Title;
             Assert.NotNull(wikiPagesTitle);
-        }
-
-        [Fact]
-        public void TestWikiPageController()
-        {
-            _wikiPageController = new WikiPageController(_context);
-            var result = _wikiPageController.Create() as ViewResult;
-            _testOutputHelper.WriteLine(result.ToString());
-            Assert.NotNull(result);
         }
 
         [Fact]
