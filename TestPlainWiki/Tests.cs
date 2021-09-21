@@ -13,7 +13,7 @@ using Xunit.Abstractions;
 
 namespace TestPlainWiki
 {
-    public class Tests
+    public class Tests :Controller
     {
         private readonly IWikiPageService _wikiPageService;
         public Tests(IWikiPageService wikiPageService)

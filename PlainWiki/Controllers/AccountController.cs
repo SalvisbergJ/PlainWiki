@@ -8,6 +8,7 @@ namespace PlainWiki.Controllers
 {
     public class AccountController : Controller
     {
+        //Because the Signout Page from Microsoft returned an Error we redirect to the index here
         [HttpGet]
         public IActionResult SignOut(string page)
         {
