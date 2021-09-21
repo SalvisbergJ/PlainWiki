@@ -29,9 +29,9 @@ namespace PlainWiki.Services
             return _context.WikiPages.FirstOrDefaultAsync(m => m.ID == id);
         }
 
-        public Task SaveChangesAsync()
+        public async Task SaveChangesAsync()
         {
-            return _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
         }
 
         public void Add(WikiPages wikiPages)
@@ -47,6 +47,16 @@ namespace PlainWiki.Services
         public void Remove(WikiPages wikiPages)
         {
             _context.WikiPages.Remove(wikiPages);
+        }
+        public List<WikiPages> Search(string searchString)
+        {
+            
+            var wikiPages = from m in GetWikiPages() select m;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                wikiPages = wikiPages.Where(s => s.Title.Contains(searchString)).ToList();
+            }
+            return wikiPages.ToList();
         }
     }
 }

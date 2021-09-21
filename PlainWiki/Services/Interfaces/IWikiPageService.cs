@@ -16,5 +16,6 @@ namespace PlainWiki.Services.Interfaces
         void Add(WikiPages wikiPages);
         void Update(WikiPages wikiPages);
         void Remove(WikiPages wikiPages);
+        List<WikiPages> Search(string search);
     }
 }
