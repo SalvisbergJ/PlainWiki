@@ -155,7 +155,7 @@ namespace PlainWiki.Controllers
         }
         public async Task<IActionResult> Index(string searchString)
         {
-            var wikiPages = _wikiPageService.Search(searchString);
+            var wikiPages = await _wikiPageService.SearchAsync(searchString);
             return View(wikiPages);
         }
     }

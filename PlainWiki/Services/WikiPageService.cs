@@ -48,14 +48,16 @@ namespace PlainWiki.Services
         {
             _context.WikiPages.Remove(wikiPages);
         }
-        public List<WikiPages> Search(string searchString)
+        public async Task<List<WikiPages>> SearchAsync(string searchString)
         {
             
-            var wikiPages = from m in GetWikiPages() select m;
+            var wikiPages = from m in GetWikiPages() 
+                            select m;
             if (!String.IsNullOrEmpty(searchString))
             {
-                wikiPages = wikiPages.Where(s => s.Title.Contains(searchString)).ToList();
+                wikiPages = wikiPages.Where(s => s.Title.Contains(searchString));
             }
+            
             return wikiPages.ToList();
         }
     }
